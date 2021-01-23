@@ -19,7 +19,7 @@ namespace AssetTracking_EF
             MobilePhone phone1 = new MobilePhone("Iphone", 1099, new DateTime(2011, 12, 12), "Uganda");
             MobilePhone phone2 = new MobilePhone("Samsung", 1299, new DateTime(2018, 3, 12), "USA");
             MobilePhone phone3 = new MobilePhone("Nokia", 699, new DateTime(2018, 4, 12), "Sweden");            
-            
+
             _assetTrackorContext.CompanyAssets.Add(pc1);
             _assetTrackorContext.SaveChanges();
 
@@ -36,7 +36,8 @@ namespace AssetTracking_EF
             _assetTrackorContext.SaveChanges();
 
             _assetTrackorContext.CompanyAssets.Add(phone3);
-            _assetTrackorContext.SaveChanges();            
+            _assetTrackorContext.SaveChanges();
+
 
             // Level 2 - Read and Report
             var query = from item in _assetTrackorContext.CompanyAssets 
@@ -98,7 +99,7 @@ namespace AssetTracking_EF
 
                 ColorConsole(assetLifeSpan);
 
-                // Uppdate price before printing on console
+                // Update price before printing on console
                 WriteItemToConsole(item, price);                
             }
 
