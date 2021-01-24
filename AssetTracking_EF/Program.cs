@@ -27,6 +27,11 @@ namespace AssetTracking_EF
             Update();
             ReadAndReportLevel3();
 
+            // Delete, Read and Report
+            Console.WriteLine("\nDELETE:  Asset called Nokia and Rerun the previous query to see changes");
+            Delete();
+            ReadAndReportLevel3();
+
             Console.ReadLine();
         }
 
@@ -168,10 +173,18 @@ namespace AssetTracking_EF
 
         static void Update()
         {
-            // Returns first element that was added to database (ID = 1),  in this case MacBook
+            // Returns first element that was added to database (Lowest ID),  in this case MacBook
             CompanyAsset assetUpdate = _assetTrackorContext.CompanyAssets.FirstOrDefault();
             assetUpdate.Office = "Sweden";
             _assetTrackorContext.SaveChanges();            
+        }
+
+        static void Delete()
+        {
+            // Returns first element called Nokia to database 
+            CompanyAsset assetDelete = _assetTrackorContext.CompanyAssets.Where(asset => asset.ModelName == "Nokia").FirstOrDefault();
+            _assetTrackorContext.CompanyAssets.Remove(assetDelete);
+            _assetTrackorContext.SaveChanges();
         }
     }
 }
