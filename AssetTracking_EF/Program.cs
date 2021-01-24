@@ -10,16 +10,23 @@ namespace AssetTracking_EF
 
         static void Main(string[] args)
         {
-            // Level 1 - Create
+            // Create
+            Console.WriteLine("\nCREATE: Assets are added by the program");
             Create();
 
-            // Level 2 - Read and Report
+            // Read and Report
+            Console.WriteLine("\nREAD - 1: (Prices in Dollars) \nOrder by Type");
             ReadAndReportLevel2();
-            // Level 3 - Read and Report
+
+            // Read and Report
+            Console.WriteLine("\nREAD - 2: (Prices in Location Currency) \nOrder by Office");
             ReadAndReportLevel3();
 
+            // Update, Read and Report
+            Console.WriteLine("\nUPDATE: Office for MacBook and Rerun the previous query to see changes");
             Update();
-          
+            ReadAndReportLevel3();
+
             Console.ReadLine();
         }
 
@@ -46,6 +53,7 @@ namespace AssetTracking_EF
         static void WriteHeadingToConsole()
         {
             Console.WriteLine("Type        ModelName           Price  PurchaseDate Location");
+            Console.WriteLine("----------  ----------          -----  ------------ --------");
         }
         static void WriteItemToConsole(CompanyAsset item, string price)
         {
@@ -94,8 +102,7 @@ namespace AssetTracking_EF
             var query = from item in _assetTrackorContext.CompanyAssets
                         orderby item.AssetType ascending
                         select item;
-
-            Console.WriteLine("\nLEVEL2 (Prices in Dollars) \nOrder by Type");
+            
             WriteHeadingToConsole();
             foreach (var item in query)
             {
@@ -131,7 +138,6 @@ namespace AssetTracking_EF
                     orderby item.Office ascending
                     select item;
 
-            Console.WriteLine("\nLEVEL3 (Prices in Dollars) \nOrder by Office");
             WriteHeadingToConsole();
             foreach (var item in query)
             {
@@ -158,6 +164,14 @@ namespace AssetTracking_EF
             }
             // Restore console to normal
             Console.ForegroundColor = ConsoleColor.White;
+        }
+
+        static void Update()
+        {
+            // Returns first element that was added to database (ID = 1),  in this case MacBook
+            CompanyAsset assetUpdate = _assetTrackorContext.CompanyAssets.FirstOrDefault();
+            assetUpdate.Office = "Sweden";
+            _assetTrackorContext.SaveChanges();            
         }
     }
 }
