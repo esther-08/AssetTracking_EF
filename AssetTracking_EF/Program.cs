@@ -14,7 +14,11 @@ namespace AssetTracking_EF
             Create();
 
             // Level 2 - Read and Report
-            ReadAndReport();
+            ReadAndReportLevel2();
+            // Level 3 - Read and Report
+            ReadAndReportLevel3();
+
+            Update();
           
             Console.ReadLine();
         }
@@ -85,13 +89,13 @@ namespace AssetTracking_EF
             _assetTrackorContext.CompanyAssets.Add(phone3);
             _assetTrackorContext.SaveChanges();
         }
-        static void ReadAndReport()
+        static void ReadAndReportLevel2()
         {
             var query = from item in _assetTrackorContext.CompanyAssets
                         orderby item.AssetType ascending
                         select item;
 
-            Console.WriteLine("\nLEVEL2 \nOrder by Type");
+            Console.WriteLine("\nLEVEL2 (Prices in Dollars) \nOrder by Type");
             WriteHeadingToConsole();
             foreach (var item in query)
             {
@@ -113,15 +117,22 @@ namespace AssetTracking_EF
                 ColorConsole(assetLifeSpan);
                 WriteItemToConsole(item, "");
             }
+            // Restore console to normal
+            Console.ForegroundColor = ConsoleColor.White;
+        }
 
-            // Level 3 - Read and Report           
-            query = from item in _assetTrackorContext.CompanyAssets
+        static void ReadAndReportLevel3()
+        {
+            DateTime nowDate = DateTime.Now;
+            TimeSpan assetLifeSpan;
+            string price;
+
+            var query = from item in _assetTrackorContext.CompanyAssets
                     orderby item.Office ascending
                     select item;
 
-            Console.WriteLine("\nLEVEL3 \nOrder by Office");
+            Console.WriteLine("\nLEVEL3 (Prices in Dollars) \nOrder by Office");
             WriteHeadingToConsole();
-            string price;
             foreach (var item in query)
             {
                 assetLifeSpan = nowDate - item.PurchaseDate;
@@ -145,7 +156,8 @@ namespace AssetTracking_EF
                 ColorConsole(assetLifeSpan);
                 WriteItemToConsole(item, price);
             }
-
+            // Restore console to normal
+            Console.ForegroundColor = ConsoleColor.White;
         }
     }
 }
