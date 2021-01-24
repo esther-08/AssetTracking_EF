@@ -13,8 +13,8 @@ namespace AssetTracking_EF
             PurchaseDate = purchaseDate;
             AssetType = "Laptop";
         }
-
     }
+
     class MobilePhone : CompanyAsset
     {
         public MobilePhone(string modelName, int price, DateTime purchaseDate, string office) : base(modelName, price, purchaseDate, office)
@@ -25,6 +25,7 @@ namespace AssetTracking_EF
             AssetType = "Phone";
         }
     }
+
     class CompanyAsset
     {
         public CompanyAsset(string modelName, int price, DateTime purchaseDate, string office)
@@ -36,12 +37,12 @@ namespace AssetTracking_EF
             PurchaseDate = purchaseDate;
             Office = office;
         }
+
         public int ID { get; set; }
         public string AssetType { get; set; }
         public string ModelName { get; set; }
         public int Price { get; set; }
         public DateTime PurchaseDate { get; set; }
         public string Office { get; set; }
-
     }
 }
